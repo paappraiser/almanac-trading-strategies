@@ -87,3 +87,23 @@ git clone https://github.com/paappraiser/almanac-trading-strategies.git
 - Jeffrey A. Hirsch — current editor
 - All statistics sourced from Almanac publications (since 1950 data)
 - MACD parameters: standard 12-26-9 (as used by Almanac Tactical Switching Strategy)
+
+## Walk-Forward Validation
+
+Full walk-forward backtest with rolling optimization (2005–2026, 22 OOS windows):
+
+```bash
+python walk_forward_backtest.py
+```
+
+Key findings:
+- **Best use: regime filter, not standalone timing** — cuts max drawdown 15-35%
+- **Optimized weights** in `stock_traders_almanac/optimized_scorer.py`
+- Detailed results in [`WALK_FORWARD_RESULTS.md`](WALK_FORWARD_RESULTS.md)
+
+```python
+from stock_traders_almanac.optimized_scorer import OptimizedAlmanacScorer
+
+scorer = OptimizedAlmanacScorer()
+score = scorer.composite_score(df)  # uses walk-forward optimized weights
+```
